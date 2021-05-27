@@ -1,4 +1,4 @@
-package models
+package com.helio.models
 
 import java.time.LocalDateTime
 

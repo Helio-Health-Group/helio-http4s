@@ -20,7 +20,7 @@ often be more complex than this.
 
 Using http4s, circe, and ScalikeJDBC, and the tables/data used in the first step, create the following:
 
-# Challenge Tasks:
+# Part 2 Challenge Tasks:
 1. JSON list Endpoints for one or both the tables you have created, based on a search parameter of your choosing.
    - note: see the acronym endpoint as an example
 2. Create another JSON list endpoint which takes a search parameter and then join the two datasets, 
@@ -31,8 +31,8 @@ Using http4s, circe, and ScalikeJDBC, and the tables/data used in the first step
 
 Bonus: Utilize foldLeft or Either, or Both somewhere in your application.
    
-# Task Rules/Goals:
-- Code must be written in Scala
+# Part 2 Challenge Rules/Goals:
+- Code in this Part must be written in Scala
 - No mutable datastructures, or use of var (i.e., must use val)
 - Please try to avoid Null and use the Option instead.
 - You are free to bring in new libraries for other details, so long as they do not detract/diminish/replace the use of 

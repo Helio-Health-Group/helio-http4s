@@ -31,12 +31,13 @@ object HttpService extends IOApp {
       // {
       //    "msg": "Hello",
       //    "name": "World",
-      //    "timestamp": "2021-05-27T13:48:03.1049861"
+      //    "timestamp": "2021-04-07T13:48:03.1049861"
       //}
       // Will echo the payload
       val info = req.as[ServerInfo]
       info.flatMap { // We could also use the for comprehension here
-        i => Ok(i.asJson)
+        i =>
+          Ok(i.asJson)
       }
   }
 

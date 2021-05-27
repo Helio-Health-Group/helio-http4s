@@ -7,9 +7,10 @@ import java.util.Properties
 
 object Database {
   private val log: Logger = getLogger
+  private val CONFIG = "config.properties"
 
   def connect(): Either[Throwable, Unit] = {
-    val inputOpt = Option(classOf[Database.type].getClassLoader.getResourceAsStream("config.properties"))
+    val inputOpt = Option(classOf[Database.type].getClassLoader.getResourceAsStream(CONFIG))
     inputOpt match {
       case Some(input) =>
         try {
@@ -32,6 +33,7 @@ object Database {
         } catch {
           case e: Throwable => Left(e)
         } finally if (input != null) input.close()
+      case None => Left(new RuntimeException(s"Unable to find $CONFIG"))
     }
   }
 }

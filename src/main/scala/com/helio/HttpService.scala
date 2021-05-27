@@ -12,21 +12,38 @@ import org.http4s.dsl.io._
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze._
+import org.log4s.{Logger, getLogger}
 import scalikejdbc.sqls
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object HttpService extends IOApp {
+  private val log: Logger = getLogger
+
+  implicit val serverInfoEnc: EntityDecoder[IO, ServerInfo] = jsonOf[IO, ServerInfo]
 
   val infoService: HttpRoutes[IO] = HttpRoutes.of[IO] {
+    // e.g., http://localhost:8080/info/ping/hello
     case GET -> Root / "ping" / msg =>
       Ok(ServerInfo(msg).asJson)
+    case req@POST -> Root / "pong" =>
+      // POST http://localhost:8080/info/pong
+      // {
+      //    "msg": "Hello",
+      //    "name": "World",
+      //    "timestamp": "2021-05-27T13:48:03.1049861"
+      //}
+      // Will echo the payload
+      val info = req.as[ServerInfo]
+      info.flatMap { // We could also use the for comprehension here
+        i => Ok(i.asJson)
+      }
   }
 
   val apiService: HttpRoutes[IO] = HttpRoutes.of[IO] {
     case GET -> Root / "acronyms" / name =>
-      val a = Acronym.a
-      val acronyms = Acronym.findAllBy(sqls.eq(a.acronym, name))
+      val t = Acronym.a
+      val acronyms = Acronym.findAllBy(sqls.eq(t.acronym, name))
       Ok(acronyms.asJson)
   }
 
@@ -38,7 +55,7 @@ object HttpService extends IOApp {
   def run(args: List[String]): IO[ExitCode] = {
     Database.connect() match {
       case Left(_) =>
-        println("Unable to connect to database")
+        log.error("Unable to connect to database")
         IO(ExitCode.Error)
       case Right(_) =>
         BlazeServerBuilder[IO](global)

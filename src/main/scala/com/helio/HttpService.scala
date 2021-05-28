@@ -2,10 +2,10 @@ package com.helio
 
 import cats.data.Kleisli
 import cats.effect._
+import com.helio.models.ServerInfo
 import com.helio.models.database.generated.Acronym
 import io.circe.generic.auto._
 import io.circe.syntax._
-import models.ServerInfo
 import org.http4s._
 import org.http4s.circe._
 import org.http4s.dsl.io._
@@ -13,7 +13,6 @@ import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze._
 import org.log4s.{Logger, getLogger}
-import scalikejdbc.sqls
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -42,10 +41,12 @@ object HttpService extends IOApp {
   }
 
   val apiService: HttpRoutes[IO] = HttpRoutes.of[IO] {
-    case GET -> Root / "acronyms" / name =>
-      val t = Acronym.a
-      val acronyms = Acronym.findAllBy(sqls.eq(t.acronym, name))
-      Ok(acronyms.asJson)
+    case GET -> Root / "acronyms" / IntVar(id) =>
+      val acronyms = Acronym.find(id)
+      acronyms match {
+        case Some(a) => Ok(a.asJson)
+        case None => NotFound(s"Acronym $id not found")
+      }
   }
 
   val httpApp: Kleisli[IO, Request[IO], Response[IO]] = Router(

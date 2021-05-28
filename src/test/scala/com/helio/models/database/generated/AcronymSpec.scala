@@ -12,11 +12,11 @@ class AcronymSpec extends Specification {
     val a = Acronym.syntax("a")
 
     "find by primary keys" in new AutoRollback {
-      val maybeFound = Acronym.find("MyString", "MyString")
+      val maybeFound = Acronym.find(123)
       maybeFound.isDefined should beTrue
     }
     "find by where clauses" in new AutoRollback {
-      val maybeFound = Acronym.findBy(sqls.eq(a.acronym, "MyString"))
+      val maybeFound = Acronym.findBy(sqls.eq(a.id, 123))
       maybeFound.isDefined should beTrue
     }
     "find all records" in new AutoRollback {
@@ -28,15 +28,15 @@ class AcronymSpec extends Specification {
       count should be_>(0L)
     }
     "find all by where clauses" in new AutoRollback {
-      val results = Acronym.findAllBy(sqls.eq(a.acronym, "MyString"))
+      val results = Acronym.findAllBy(sqls.eq(a.id, 123))
       results.size should be_>(0)
     }
     "count by where clauses" in new AutoRollback {
-      val count = Acronym.countBy(sqls.eq(a.acronym, "MyString"))
+      val count = Acronym.countBy(sqls.eq(a.id, 123))
       count should be_>(0L)
     }
     "create new record" in new AutoRollback {
-      val created = Acronym.create(acronym = "MyString", definition = "MyString")
+      val created = Acronym.create(id = 123, acronym = "MyString", definition = "MyString")
       created should not beNull
     }
     "save a record" in new AutoRollback {
@@ -50,7 +50,7 @@ class AcronymSpec extends Specification {
       val entity = Acronym.findAll().head
       val deleted = Acronym.destroy(entity) == 1
       deleted should beTrue
-      val shouldBeNone = Acronym.find("MyString", "MyString")
+      val shouldBeNone = Acronym.find(123)
       shouldBeNone.isDefined should beFalse
     }
     "perform batch insert" in new AutoRollback {

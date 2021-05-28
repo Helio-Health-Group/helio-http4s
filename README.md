@@ -2,7 +2,7 @@
 
 This is a basic Http Service using http4s, a popular functional Scala library https://http4s.org/v0.21/. 
 Within the HttpService are some basic functions that should give a developer a good starting point for how to implement
-basic endpoints. For additional documentation see https://http4s.org/v0.21/, which covers a wide variety of options
+simple endpoints. For additional documentation see https://http4s.org/v0.21/, which covers a wide variety of options
 that may or may not be included in this challenge
 
 Beyond the HTTP library there are 2 more key libraries:
@@ -21,25 +21,25 @@ often be more complex than this.
 Using http4s, circe, and ScalikeJDBC, and the tables/data used in the first step, create the following:
 
 # Part 2 Challenge Tasks:
-1. JSON list Endpoints for one or both the tables you have created, based on a search parameter of your choosing.
-   - note: see the acronym endpoint as an example
-2. Create another JSON list endpoint which takes a search parameter and then join the two datasets, 
-   - note: this can be either at the endpoint level or at the database level - your choice.
-   - note2: if the search parameter only satisfies one dataset, then that result should be returned, with the other as option
+1. JSON list Endpoints for one or both the tables you have created, based on a search path parameter of your choosing.
+2. Create another JSON list endpoint which takes a search path parameter and then join the two datasets, 
+   - note: this can be either at the endpoint level or at the database level.
+   - note2: if the search path parameter only satisfies one dataset, then that result should be returned, with the other
+     as option
 3. Add a POST/create endpoint to one of the tables you have created, so that a JSON response can add an entry to that
-4. Add a PUT / update endpoint to the table/entity in 3.
+4. Add a PUT/update endpoint to the table/entity in 3.
 
 Bonus: Utilize foldLeft or Either, or Both somewhere in your application.
    
 # Part 2 Challenge Rules/Goals:
 - Code in this Part must be written in Scala
 - No mutable datastructures, or use of var (i.e., must use val)
-- Please try to avoid Null and use the Option instead.
+- Please avoid Null and use the Option instead.
 - You are free to bring in new libraries for other details, so long as they do not detract/diminish/replace the use of 
   http4s, circe, ScalikeJDBC (i.e., core libraries use at Helio)
 - For some reason one of the above must be broken, please be prepared to discuss it.
 - Add features or testings if desired, they are appreciated but are not required here.
-- Take as much time as you like, it's estimate that this should take anywhere from 2-6 hours depending on skill level or
+- Take as much time as needed, it's estimated that this should take anywhere from 2-6 hours depending on skill level or
 exposure. It could take longer, but feel free to reach out to us if there's a concern in this area.
 
 ### Project Notes:
